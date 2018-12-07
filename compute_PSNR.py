@@ -29,7 +29,7 @@ for n, item in enumerate(sharp_list):
     if not item.startswith('.'):
 
         name_sharp = sharp_list[n]
-        name_deblu = 'test_' + name_sharp
+        name_deblu = name_sharp
 
         path_deblu = os.path.join(deblu_root, name_deblu)
         path_sharp = os.path.join(sharp_root, name_sharp)
