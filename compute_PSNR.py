@@ -13,8 +13,8 @@ def psnr(img1, img2):
     return 20 * math.log10(PIXEL_MAX / math.sqrt(mse))
 
 
-deblu_root = './test_all_res' #_
-sharp_root = './test_full' #_
+deblu_root = './test_all_noise_res' #_
+sharp_root = './test_full_noise' #_
 
 deblu_list = os.listdir(deblu_root)
 sharp_list = os.listdir(sharp_root)
