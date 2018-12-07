@@ -59,7 +59,7 @@ for folder in splits:
             img_in = np.array(img_in)
 
             img_blur = np.mean(img_in, axis=0)
-            img_blur = imnoise(img_blur, mode='gaussian', clip=True, var=0.001)
+            img_blur = imnoise(img_blur/255, mode='gaussian', clip=True, var=0.001)*255
             img_sharp = img_in[5]
 
 
