@@ -278,8 +278,9 @@ class DEBLUR(object):
         for imgName in imgsName:
             blur = scipy.misc.imread(os.path.join(input_path, imgName))
             h, w, c = blur.shape
-            blur = blur[:, :int(w / 2)]
-            w = w/2
+            #blur = blur[:, :int(w / 2)]
+            _, blur, _ = np.split(blur, 3, axis=1)
+            w = blur.shape[1]
             # make sure the width is larger than the height
             rot = False
             if h > w:
