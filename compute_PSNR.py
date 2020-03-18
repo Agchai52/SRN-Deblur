@@ -21,7 +21,6 @@ test_data = f_test.readlines()
 sharp_list = [line.rstrip() for line in test_data]
 f_test.close()
 deblu_list = os.listdir(deblu_root)
-sharp_list = os.listdir(sharp_root)
 sharp_list = sorted(sharp_list, key=str.lower)
 print(sharp_list)
 
