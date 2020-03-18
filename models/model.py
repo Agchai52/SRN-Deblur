@@ -264,9 +264,9 @@ class DEBLUR(object):
             os.makedirs(output_path)
         f_test = open("./dataset/AidedDeblur/test_instance_names.txt", "r")
         imgsName = f_test.readlines()
-        imgsName = [line.rstrip() for line in test_data]
+        imgsName = [line.rstrip() for line in imgsName]
         f_test.close()
-        #imgsName = sorted(os.listdir(input_path))
+        imgsName = sorted(imgsName)
 
         H, W = height, width
         inp_chns = 3 if self.args.model == 'color' else 1
