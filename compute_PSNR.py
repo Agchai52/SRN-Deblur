@@ -22,14 +22,11 @@ sharp_list = [line.rstrip() for line in test_data]
 f_test.close()
 deblu_list = os.listdir(deblu_root)
 sharp_list = sorted(sharp_list, key=str.lower)
-print(sharp_list)
-
-num_imgs = len(deblu_list)
 PSNR_all = []
 SSIM_all = []
 
 for item in sharp_list:
-    if not item.startswith('.'):
+    if True:
 
         name_sharp = item[-6:]
         name_deblu = 'test_' + name_sharp + '_blur_err.png'
@@ -40,10 +37,10 @@ for item in sharp_list:
         img_deblu = cv2.imread(path_deblu, cv2.IMREAD_COLOR).astype(np.float)
         img_sharp = cv2.imread(path_sharp, cv2.IMREAD_COLOR).astype(np.float)
 
-        print(img_deblu.shape)
-        img_deblu = cv2.resize(img_deblu, (1280, 720))
+        #print(img_deblu.shape)
+        #img_deblu = cv2.resize(img_deblu, (1280, 720))
 
-        print(img_deblu.shape)
+        #print(img_deblu.shape)
         # cv2.imshow('sharp', img_sharp/255)
         # cv2.imshow('deblur', img_deblu/255)
         # cv2.waitKey(0)
