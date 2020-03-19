@@ -284,9 +284,6 @@ class DEBLUR(object):
             blur = scipy.misc.imread(imgName + '_blur_err.png')
             imgName = 'test_' + imgName[-6:] + '_blur_err.png'
             h, w, c = blur.shape
-            #blur = blur[:, :int(w / 2)]
-            #_, blur, _ = np.split(blur, 3, axis=1)
-            #w = blur.shape[1]
             # make sure the width is larger than the height
             rot = False
             if h > w:
@@ -325,8 +322,5 @@ class DEBLUR(object):
 
             if rot:
                 res = np.transpose(res, [1, 0, 2])
-
-            #scipy.misc.pilutil.imshow(res)
-            #pause()
             scipy.misc.imsave(os.path.join(output_path, imgName), res)
             exit()
