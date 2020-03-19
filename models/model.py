@@ -284,9 +284,7 @@ class DEBLUR(object):
             blur = scipy.misc.imread(imgName + '_blur_err.png')
             imgName = 'test_' + imgName[-6:] + '_blur_err.png'
             h, w, c = blur.shape
-            scipy.misc.imsave(os.path.join(output_path, 'blur_'+ imgName), blur)
-            print(h, w, c)
-            exit()
+            print(max(blur))
             #blur = blur[:, :int(w / 2)]
             #_, blur, _ = np.split(blur, 3, axis=1)
             #w = blur.shape[1]
@@ -332,3 +330,4 @@ class DEBLUR(object):
             #scipy.misc.pilutil.imshow(res)
             #pause()
             scipy.misc.imsave(os.path.join(output_path, imgName), res)
+            exit()
