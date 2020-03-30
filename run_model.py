@@ -33,17 +33,25 @@ def main(_):
     # set gpu/cpu mode
     if int(args.gpu_id) >= 0:
         os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_id
+        device = '/gpu:{}'.format(args.gpu_id)
     else:
         os.environ['CUDA_VISIBLE_DEVICES'] = ''
+        device = '/cpu:0'
+
+    config = tf.ConfigProto(allow_soft_placement=True)
+    config.gpu_options.allow_growth = True
 
     # set up deblur models
-    deblur = model.DEBLUR(args)
-    if args.phase == 'test':
-        deblur.test(args.height, args.width, args.input_path, args.output_path)
-    elif args.phase == 'train':
-        deblur.train()
-    else:
-        print('phase should be set to either test or train')
+    with tf.device(device):
+        with tf.Session(config=config) as sess:
+            deblur = model.DEBLUR(args)
+
+            if args.phase == 'test':
+                deblur.test(sess, args.height, args.width, args.input_path, args.output_path)
+            elif args.phase == 'train':
+                deblur.train(sess)
+            else:
+                print('phase should be set to either test or train')
 
 
 if __name__ == '__main__':

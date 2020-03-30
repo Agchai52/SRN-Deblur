@@ -172,7 +172,7 @@ class DEBLUR(object):
         for var in all_vars:
             print(var.name)
 
-    def train(self):
+    def train(self, sess):
         def get_optimizer(loss, global_step=None, var_list=None, is_gradient_clip=False):
             train_op = tf.train.AdamOptimizer(self.lr)
             if is_gradient_clip:
@@ -202,8 +202,8 @@ class DEBLUR(object):
         train_gnet = get_optimizer(self.loss_total, global_step, self.all_vars)
 
         # session and thread
-        gpu_options = tf.GPUOptions(allow_growth=True)
-        sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+        #gpu_options = tf.GPUOptions(allow_growth=True)
+        #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
         self.sess = sess
         sess.run(tf.global_variables_initializer())
         self.saver = tf.train.Saver(max_to_keep=50, keep_checkpoint_every_n_hours=1)
@@ -270,7 +270,7 @@ class DEBLUR(object):
             print(" [*] Reading checkpoints... ERROR")
             return False
 
-    def test(self, height, width, input_path, output_path):
+    def test(self, sess, height, width, input_path, output_path):
         if not os.path.exists(output_path):
             os.makedirs(output_path)
         f_test = open("./dataset/AidedDeblur/test_instance_names.txt", "r")
@@ -285,7 +285,7 @@ class DEBLUR(object):
         inputs = tf.placeholder(shape=[self.batch_size, H, W, inp_chns], dtype=tf.float32)
         outputs = self.generator(inputs, reuse=False)
 
-        sess = tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True)))
+        #sess = tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True)))
 
         self.saver = tf.train.Saver()
         self.load(sess, self.train_dir, step=523000)
