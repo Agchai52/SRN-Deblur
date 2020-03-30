@@ -21,8 +21,10 @@ class DEBLUR(object):
 
         # if args.phase == 'train':
         self.crop_size = 256
-        self.data_list = open(args.datalist, 'rt').read().splitlines()
-        self.data_list = list(map(lambda x: x.split(' '), self.data_list))
+        #self.data_list = open(args.datalist, 'rt').read().splitlines()
+        #self.data_list = list(map(lambda x: x.split(' '), self.data_list))
+        self.data_list = open("./dataset/AidedDeblur/train_instance_names.txt", "r").readlines()
+        self.data_list = [line.rstrip() for line in self.data_list]
         random.shuffle(self.data_list)
         self.train_dir = os.path.join('./checkpoints', args.model)
         if not os.path.exists(self.train_dir):
@@ -36,10 +38,15 @@ class DEBLUR(object):
 
     def input_producer(self, batch_size=10):
         def read_data():
-            img_a = tf.image.decode_image(tf.read_file(tf.string_join(['./training_set/', self.data_queue[0]])),
-                                          channels=3)
-            img_b = tf.image.decode_image(tf.read_file(tf.string_join(['./training_set/', self.data_queue[1]])),
-                                          channels=3)
+            #img_a = tf.image.decode_image(tf.read_file(tf.string_join(['./training_set/', self.data_queue[0]])),
+            #                              channels=3)
+            #img_b = tf.image.decode_image(tf.read_file(tf.string_join(['./training_set/', self.data_queue[1]])),
+            #                              channels=3)
+            img_a = tf.image.decode_image(tf.read_file(tf.string_join([self.data_queue[0], '_blur_err.png'])), channels=3)
+
+            img_b = tf.image.decode_image(tf.read_file(tf.string_join([self.data_queue[0], '_ref.png'])),
+                                         channels=3)
+
             img_a, img_b = preprocessing([img_a, img_b])
             return img_a, img_b
 
@@ -52,9 +59,13 @@ class DEBLUR(object):
             return img_crop
 
         with tf.variable_scope('input'):
+            #List_all = tf.convert_to_tensor(self.data_list, dtype=tf.string)
+            #gt_list = List_all[:, 0]
+            #in_list = List_all[:, 1]
+
             List_all = tf.convert_to_tensor(self.data_list, dtype=tf.string)
-            gt_list = List_all[:, 0]
-            in_list = List_all[:, 1]
+            gt_list = List_all[:]
+            in_list = List_all[:]
 
             self.data_queue = tf.train.slice_input_producer([in_list, gt_list], capacity=20)
             image_in, image_gt = read_data()
