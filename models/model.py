@@ -20,7 +20,7 @@ class DEBLUR(object):
         self.chns = 3 if self.args.model == 'color' else 1  # input / output channels
 
         # if args.phase == 'train':
-        self.crop_size = 256
+        self.crop_size = 720
         #self.data_list = open(args.datalist, 'rt').read().splitlines()
         #self.data_list = list(map(lambda x: x.split(' '), self.data_list))
         self.data_list = open("./dataset/AidedDeblur/train_instance_names.txt", "r").readlines()
@@ -56,8 +56,7 @@ class DEBLUR(object):
                 imgs = [tf.image.rgb_to_grayscale(img) for img in imgs]
             img_crop = tf.unstack(tf.random_crop(tf.stack(imgs, axis=0), [2, self.crop_size, self.crop_size, self.chns]),
                                   axis=0)
-            #return img_crop
-            return imgs
+            return img_crop
 
         with tf.variable_scope('input'):
             #List_all = tf.convert_to_tensor(self.data_list, dtype=tf.string)
