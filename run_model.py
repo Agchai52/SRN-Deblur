@@ -11,8 +11,8 @@ def parse_args():
     parser.add_argument('--phase', type=str, default='test', help='determine whether train or test')
     parser.add_argument('--datalist', type=str, default='./datalist_gopro.txt', help='training datalist')
     parser.add_argument('--model', type=str, default='lstm', help='model type: [lstm | gray | color]')
-    parser.add_argument('--batch_size', help='training batch size', type=int, default=1)
-    parser.add_argument('--epoch', help='training epoch number', type=int, default=4000)
+    parser.add_argument('--batch_size', help='training batch size', type=int, default=4)
+    parser.add_argument('--epoch', help='training epoch number', type=int, default=1000)
     parser.add_argument('--lr', type=float, default=1e-4, dest='learning_rate', help='initial learning rate')
     parser.add_argument('--gpu', dest='gpu_id', type=str, default='0', help='use gpu or cpu')
     parser.add_argument('--height', type=int, default=720,
