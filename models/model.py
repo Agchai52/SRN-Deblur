@@ -56,7 +56,8 @@ class DEBLUR(object):
                 imgs = [tf.image.rgb_to_grayscale(img) for img in imgs]
             img_crop = tf.unstack(tf.random_crop(tf.stack(imgs, axis=0), [2, self.crop_size, self.crop_size, self.chns]),
                                   axis=0)
-            return img_crop
+            #return img_crop
+            return imgs
 
         with tf.variable_scope('input'):
             #List_all = tf.convert_to_tensor(self.data_list, dtype=tf.string)
