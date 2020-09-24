@@ -15,7 +15,7 @@ def parse_args():
     parser.add_argument('--epoch', help='training epoch number', type=int, default=500)
     parser.add_argument('--lr', type=float, default=1e-4, dest='learning_rate', help='initial learning rate')
     parser.add_argument('--gpu', dest='gpu_id', type=str, default='0', help='use gpu or cpu')
-    parser.add_argument('--height', type=int, default=1364,
+    parser.add_argument('--height', type=int, default=1360,
                         help='height for the tensorflow placeholder, should be multiples of 16')
     parser.add_argument('--width', type=int, default=2048,
                         help='width for the tensorflow placeholder, should be multiple of 16 for 3 scales')
