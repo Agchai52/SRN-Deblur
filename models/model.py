@@ -273,11 +273,14 @@ class DEBLUR(object):
     def test(self, sess, height, width, input_path, output_path):
         if not os.path.exists(output_path):
             os.makedirs(output_path)
-        f_test = open("./dataset/AidedDeblur/test_instance_names.txt", "r")
-        imgsName = f_test.readlines()
-        imgsName = [line.rstrip() for line in imgsName]
-        f_test.close()
-        imgsName = sorted(imgsName)
+        imgsName = sorted(os.listdir(input_path))
+
+        # For nonBlind only
+        #f_test = open("./dataset/AidedDeblur/test_instance_names.txt", "r")
+        #imgsName = f_test.readlines()
+        #imgsName = [line.rstrip() for line in imgsName]
+        #f_test.close()
+        #imgsName = sorted(imgsName)
 
         H, W = height, width
         inp_chns = 3 if self.args.model == 'color' else 1
@@ -291,9 +294,11 @@ class DEBLUR(object):
         self.load(sess, self.train_dir, step=383000)  # original 564000 532000
 
         for imgName in imgsName:
-            #blur = scipy.misc.imread(os.path.join(input_path, imgName))
-            blur = scipy.misc.imread(imgName + '_blur_err.png')
-            imgName = 'test_' + imgName[-6:] + '_blur_err.png'
+            blur = scipy.misc.imread(os.path.join(input_path, imgName))
+
+            # For NonBLind Only
+            # blur = scipy.misc.imread(imgName + '_blur_err.png')
+            # imgName = 'test_' + imgName[-6:] + '_blur_err.png'
             h, w, c = blur.shape
             # make sure the width is larger than the height
             rot = False
