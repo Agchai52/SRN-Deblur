@@ -21,10 +21,10 @@ class DEBLUR(object):
 
         # if args.phase == 'train':
         self.crop_size = 720
-        #self.data_list = open(args.datalist, 'rt').read().splitlines()
-        #self.data_list = list(map(lambda x: x.split(' '), self.data_list))
-        self.data_list = open("./dataset/AidedDeblur/train_instance_names.txt", "r").readlines()
-        self.data_list = [line.rstrip() for line in self.data_list]
+        self.data_list = open(args.datalist, 'rt').read().splitlines()
+        self.data_list = list(map(lambda x: x.split(' '), self.data_list))
+        #self.data_list = open("./dataset/AidedDeblur/train_instance_names.txt", "r").readlines()
+        #self.data_list = [line.rstrip() for line in self.data_list]
         random.shuffle(self.data_list)
         self.train_dir = os.path.join('./checkpoints', args.model)
         if not os.path.exists(self.train_dir):
